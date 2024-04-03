@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'じゃんけん'),
     );
   }
 }
@@ -30,11 +32,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String myJankenText = '👊';
+  String computerjankenText = '?';
 
-  void _incrementCounter() {
+  List<String> jankenList = [
+    '👊',
+    '✌️',
+    '✋',
+  ];
+
+  void randomComputerJankenText() {
+    final random = Random();
+    int randomNumber = random.nextInt(3);
     setState(() {
-      _counter++;
+      computerjankenText = jankenList[randomNumber];
     });
   }
 
@@ -50,19 +61,73 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              '相手',
+              style: TextStyle(fontSize: 30),
             ),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              computerjankenText,
+              style: TextStyle(fontSize: 100),
+            ),
+            const SizedBox(height: 80),
+            const Text(
+              '自分',
+              style: TextStyle(fontSize: 50),
+            ),
+            Text(
+              myJankenText,
+              style: TextStyle(fontSize: 200),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                myJankenText = '👊';
+              });
+              randomComputerJankenText();
+            },
+            child: const Text(
+              '👊',
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                myJankenText = '✌️';
+              });
+              randomComputerJankenText();
+            },
+            child: const Text(
+              '✌️',
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                myJankenText = '✋️';
+              });
+              randomComputerJankenText();
+            },
+            child: const Text(
+              '✋',
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
