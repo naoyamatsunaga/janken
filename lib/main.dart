@@ -35,17 +35,24 @@ class _MyHomePageState extends State<MyHomePage> {
   String myJankenText = '👊';
   String computerjankenText = '?';
 
-  List<String> jankenList = [
+  /*List<String> jankenList = [
     '👊',
     '✌️',
     '✋',
+  ];*/
+
+  List<Hand> jankenList = [
+    Hand.rock,
+    Hand.scissors,
+    Hand.paper,
   ];
 
   void randomComputerJankenText() {
     final random = Random();
-    int randomNumber = random.nextInt(3);
+    final randomNumber = random.nextInt(3);
+    final hand = jankenList[randomNumber];
     setState(() {
-      computerjankenText = jankenList[randomNumber];
+      computerjankenText = hand.text;
     });
   }
 
@@ -86,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: () {
               setState(() {
-                myJankenText = '👊';
+                myJankenText = Hand.rock.text;
               });
               randomComputerJankenText();
             },
@@ -101,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: () {
               setState(() {
-                myJankenText = '✌️';
+                myJankenText = Hand.scissors.text;
               });
               randomComputerJankenText();
             },
@@ -116,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: () {
               setState(() {
-                myJankenText = '✋️';
+                myJankenText = Hand.paper.text;
               });
               randomComputerJankenText();
             },
@@ -130,5 +137,23 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
     );
+  }
+}
+
+// Enum
+enum Hand {
+  rock,
+  scissors,
+  paper;
+
+  String get text {
+    switch (this) {
+      case Hand.rock:
+        return '👊';
+      case Hand.scissors:
+        return '✌️';
+      case Hand.paper:
+        return '✋';
+    }
   }
 }
