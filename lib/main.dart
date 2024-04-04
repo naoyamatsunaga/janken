@@ -41,16 +41,19 @@ class _MyHomePageState extends State<MyHomePage> {
     '✋',
   ];*/
 
-  List<Hand> jankenList = [
+  /*List<Hand> jankenList = [
     Hand.rock,
     Hand.scissors,
     Hand.paper,
-  ];
+  ];*/
 
   void randomComputerJankenText() {
     final random = Random();
     final randomNumber = random.nextInt(3);
-    final hand = jankenList[randomNumber];
+    // enumはリストをすでに持っているので以下のように書く必要はない
+    // final hand = jankenList[randomNumber];
+    // enumのリストを使って書くと以下のようになる
+    final hand = Hand.values[randomNumber];
     setState(() {
       computerjankenText = hand.text;
     });
@@ -76,9 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 100),
             ),
             const SizedBox(height: 80),
-            const Text(
-              '自分',
-              style: TextStyle(fontSize: 50),
+            Text(
+              Result.win.text,
+              style: TextStyle(fontSize: 30),
             ),
             Text(
               myJankenText,
@@ -88,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
             onPressed: () {
@@ -154,6 +157,34 @@ enum Hand {
         return '✌️';
       case Hand.paper:
         return '✋';
+    }
+  }
+}
+
+enum Result {
+  win,
+  lose,
+  draw;
+
+  String get text {
+    switch (this) {
+      case Result.win:
+        return '勝ち';
+      case Result.lose:
+        return '負け';
+      case Result.draw:
+        return 'あいこ';
+    }
+  }
+
+  String get englishText {
+    switch (this) {
+      case Result.win:
+        return 'win';
+      case Result.lose:
+        return 'lose';
+      case Result.draw:
+        return 'draw';
     }
   }
 }
