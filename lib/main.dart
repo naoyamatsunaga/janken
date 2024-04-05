@@ -32,8 +32,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String myJankenText = '👊';
-  String computerjankenText = '?';
+  //String myJankenText = '👊';
+  //String computerjankenText = '?';
+
+  Hand? myHand;
+  Hand? computerHand;
 
   /*List<String> jankenList = [
     '👊',
@@ -55,9 +58,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // enumのリストを使って書くと以下のようになる
     final hand = Hand.values[randomNumber];
     setState(() {
-      computerjankenText = hand.text;
+      computerHand = hand;
     });
   }
+
+  void decideResult() {}
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 30),
             ),
             Text(
-              computerjankenText,
+              computerHand?.text ?? '?',
               style: TextStyle(fontSize: 100),
             ),
             const SizedBox(height: 80),
@@ -84,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 30),
             ),
             Text(
-              myJankenText,
+              myHand?.text ?? '?',
               style: TextStyle(fontSize: 200),
             ),
           ],
@@ -96,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: () {
               setState(() {
-                myJankenText = Hand.rock.text;
+                myHand = Hand.rock;
               });
               randomComputerJankenText();
             },
@@ -111,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: () {
               setState(() {
-                myJankenText = Hand.scissors.text;
+                myHand = Hand.scissors;
               });
               randomComputerJankenText();
             },
@@ -126,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: () {
               setState(() {
-                myJankenText = Hand.paper.text;
+                myHand = Hand.paper;
               });
               randomComputerJankenText();
             },
