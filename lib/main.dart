@@ -37,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Hand? myHand;
   Hand? computerHand;
+  Result? result;
 
   /*List<String> jankenList = [
     '👊',
@@ -60,9 +61,34 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       computerHand = hand;
     });
+    decideResult();
   }
 
-  void decideResult() {}
+  void decideResult() {
+    if (myHand == null || computerHand == null) {
+      return;
+    }
+
+    // finalでは値の代入は１回しかできない
+    final Result result;
+
+    // あいこパターン
+    if (myHand == computerHand) {
+      result = Result.draw;
+    }
+    // 勝ちパターン
+    else if (myHand == Hand.rock && computerHand == Hand.scissors ||
+        myHand == Hand.scissors && computerHand == Hand.paper ||
+        myHand == Hand.paper && computerHand == Hand.rock) {
+      result = Result.win;
+    } else {
+      // それ以外は負け
+      result = Result.lose;
+    }
+    setState(() {
+      this.result = result;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 80),
             Text(
-              Result.win.text,
+              result?.text ?? '?',
               style: TextStyle(fontSize: 30),
             ),
             Text(
